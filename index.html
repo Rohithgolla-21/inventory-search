@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inventory Search</title>
+</head>
+<body>
+
+<h2>Inventory Search</h2>
+
+<!-- Search Input -->
+<input type="text" id="search" placeholder="Search product">
+
+<!-- Category Dropdown -->
+<select id="category">
+  <option value="">All</option>
+  <option value="Furniture">Furniture</option>
+  <option value="Electronics">Electronics</option>
+  <option value="Stationery">Stationery</option>
+</select>
+
+<!-- Price Inputs -->
+<input type="number" id="minPrice" placeholder="Min Price">
+<input type="number" id="maxPrice" placeholder="Max Price">
+
+<!-- Button -->
+<button onclick="search()">Search</button>
+
+<!-- Results -->
+<ul id="results"></ul>
+
+<script>
+async function search() {
+  const q = document.getElementById("search").value;
+  const category = document.getElementById("category").value;
+  const minPrice = document.getElementById("minPrice").value;
+  const maxPrice = document.getElementById("maxPrice").value;
+
+  let url = `http://localhost:5000/search?q=${q}&category=${category}&minPrice=${minPrice}&maxPrice=${maxPrice}`;
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  const list = document.getElementById("results");
+  list.innerHTML = "";
+
+  if (data.length === 0) {
+    list.innerHTML = "<li>No results found</li>";
+    return;
+  }
+
+  data.forEach(item => {
+    const li = document.createElement("li");
+    li.textContent = `${item.productName} - ${item.category} - ₹${item.price}`;
+    list.appendChild(li);
+  });
+}
+</script>
+
+</body>
+</html>
