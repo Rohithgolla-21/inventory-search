@@ -35,7 +35,7 @@ async function search() {
   const minPrice = document.getElementById("minPrice").value;
   const maxPrice = document.getElementById("maxPrice").value;
 
-  let url = `http://localhost:5000/search?q=${q}&category=${category}&minPrice=${minPrice}&maxPrice=${maxPrice}`;
+  let url = `https://inventory-search-backend-0w07.onrender.com/search?q=${q}&category=${category}&minPrice=${minPrice}&maxPrice=${maxPrice}`;
 
   const res = await fetch(url);
   const data = await res.json();
